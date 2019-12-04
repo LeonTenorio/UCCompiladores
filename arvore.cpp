@@ -147,7 +147,7 @@ string tabGenerator(string first_word, bool is_label){
     return ret+first_word;
 }
 
-static string threeAdressCode = "goto main\n";
+static string treeAdressCode = "goto main\n";
 
 string codeGenerator(treeNode *tree, int flag){
 	if(tree==NULL) return " ";
@@ -161,11 +161,11 @@ string codeGenerator(treeNode *tree, int flag){
 				return a + " " + getOppositeOperator(tree->name) + " " + b;
 			}else{
 				if(tree->name != "="){
-					threeAdressCode = threeAdressCode + tabGenerator("", false) + "_t" + to_string(tempIndex) + " = " + a + tree->name + b + "\n";
+					treeAdressCode = treeAdressCode + tabGenerator("", false) + "_t" + to_string(tempIndex) + " = " + a + tree->name + b + "\n";
 					tempIndex++;
 					return "_t" + to_string(tempIndex-1);
 				}else{
-					threeAdressCode = threeAdressCode + tabGenerator("", false) + a + " = " + b + "\n";
+					treeAdressCode = treeAdressCode + tabGenerator("", false) + a + " = " + b + "\n";
 					if(tree->sibling != NULL) codeGenerator(tree->sibling,0);
 					return " ";
 				}
@@ -174,7 +174,7 @@ string codeGenerator(treeNode *tree, int flag){
 		}
 		case IdK:
 			if(flag == 2){
-				threeAdressCode = threeAdressCode + tabGenerator("", false) + "param " + tree->name + "\n";
+				treeAdressCode = treeAdressCode + tabGenerator("", false) + "param " + tree->name + "\n";
 				if(tree->sibling != NULL)codeGenerator(tree->sibling,2);
 				return " ";
 			}else{
@@ -183,7 +183,7 @@ string codeGenerator(treeNode *tree, int flag){
 			}
 		case ConstK:
 			if(flag == 2){
-				threeAdressCode = threeAdressCode + tabGenerator("", false) + "param " + to_string(tree->val) + "\n";
+				treeAdressCode = treeAdressCode + tabGenerator("", false) + "param " + to_string(tree->val) + "\n";
 				if(tree->sibling != NULL)codeGenerator(tree->sibling,2);
 				return " ";
 			}else{
@@ -191,7 +191,7 @@ string codeGenerator(treeNode *tree, int flag){
 			}
 			break;
 		case FnK:
-			threeAdressCode = threeAdressCode + "\n" + tree->name + ": " + "\n";
+			treeAdressCode = treeAdressCode + "\n" + tree->name + ": " + "\n";
 			codeGenerator(tree->child[1],0);
 			if(tree->sibling != NULL)  codeGenerator(tree->sibling,0);
 			return " ";
@@ -207,10 +207,10 @@ string codeGenerator(treeNode *tree, int flag){
 				if(tree->child[0] != NULL){
 					n = countParams(tree->child[0]);
           if(n>1)
-            threeAdressCode = threeAdressCode + "\n";
+            treeAdressCode = treeAdressCode + "\n";
 					codeGenerator(tree->child[0],2);
 				}
-				threeAdressCode = threeAdressCode + tabGenerator("", false) + "call " + tree->name + ","  + to_string(n) + "\n";
+				treeAdressCode = treeAdressCode + tabGenerator("", false) + "call " + tree->name + ","  + to_string(n) + "\n";
 				if(tree->sibling != NULL) codeGenerator(tree->sibling,0);
 				return " ";
 			}else if(flag==1){
@@ -219,7 +219,7 @@ string codeGenerator(treeNode *tree, int flag){
 					n = countParams(tree->child[0]);
 					codeGenerator(tree->child[0],2);
 				}
-				threeAdressCode = threeAdressCode + tabGenerator("", false) + "_t" + to_string(tempIndex) +  " = "  + "call " + tree->name + ","  + to_string(n) + "\n";
+				treeAdressCode = treeAdressCode + tabGenerator("", false) + "_t" + to_string(tempIndex) +  " = "  + "call " + tree->name + ","  + to_string(n) + "\n";
 				tempIndex++;
 				return "_t" + to_string(tempIndex-1);
 			}else{
@@ -228,8 +228,8 @@ string codeGenerator(treeNode *tree, int flag){
 					n = countParams(tree->child[0]);
 					codeGenerator(tree->child[0],2);
 				}
-				threeAdressCode = threeAdressCode + tabGenerator("", false) + "_t" + to_string(tempIndex) +  " = "  + "call " + tree->name + ","  + to_string(n) + "\n";
-				threeAdressCode = threeAdressCode + tabGenerator("", false) + "param " + "_t" + to_string(tempIndex) + "\n";
+				treeAdressCode = treeAdressCode + tabGenerator("", false) + "_t" + to_string(tempIndex) +  " = "  + "call " + tree->name + ","  + to_string(n) + "\n";
+				treeAdressCode = treeAdressCode + tabGenerator("", false) + "param " + "_t" + to_string(tempIndex) + "\n";
 				tempIndex++;
 				if(tree->sibling != NULL) codeGenerator(tree->sibling,2);
 				return " ";
@@ -243,12 +243,12 @@ string codeGenerator(treeNode *tree, int flag){
 			label2 = labelIndex + 1;
 			labelIndex += 2;
 			a = codeGenerator(tree->child[0],2);
-			threeAdressCode = threeAdressCode + tabGenerator("", false) + "if " + a + " goto _L" + to_string(label1) + "\n";
+			treeAdressCode = treeAdressCode + tabGenerator("", false) + "if " + a + " goto _L" + to_string(label1) + "\n";
 			if(tree->child[2] != NULL) codeGenerator(tree->child[2],0);
-			threeAdressCode = threeAdressCode + tabGenerator("", false) + "goto _L" + to_string(label2) + "\n";
-			threeAdressCode = threeAdressCode + tabGenerator("_L"+to_string(label1)+":", true) + "\n";
+			treeAdressCode = treeAdressCode + tabGenerator("", false) + "goto _L" + to_string(label2) + "\n";
+			treeAdressCode = treeAdressCode + tabGenerator("_L"+to_string(label1)+":", true) + "\n";
 			codeGenerator(tree->child[1],0);
-			threeAdressCode = threeAdressCode + tabGenerator("_L"+to_string(label2)+": ", true) + "\n";
+			treeAdressCode = treeAdressCode + tabGenerator("_L"+to_string(label2)+": ", true) + "\n";
 			if(tree->sibling != NULL) codeGenerator(tree->sibling,0);
 			return " ";
 			break;
@@ -260,10 +260,10 @@ string codeGenerator(treeNode *tree, int flag){
 			label2 = labelIndex + 1;
 			labelIndex += 2;
 			a = codeGenerator(tree->child[0],3);
-			threeAdressCode = threeAdressCode + tabGenerator("_L" +to_string(label1)+":", true) + "if " + a + " goto _L" + to_string(label2) + "\n";
+			treeAdressCode = treeAdressCode + tabGenerator("_L" +to_string(label1)+":", true) + "if " + a + " goto _L" + to_string(label2) + "\n";
 			codeGenerator(tree->child[1],0);
-			threeAdressCode = threeAdressCode + tabGenerator("", false) + "goto _L" + to_string(label1) + "\n";
-			threeAdressCode = threeAdressCode + tabGenerator("_L"+to_string(label2)+": ", true);
+			treeAdressCode = treeAdressCode + tabGenerator("", false) + "goto _L" + to_string(label1) + "\n";
+			treeAdressCode = treeAdressCode + tabGenerator("_L"+to_string(label2)+": ", true);
 			if(tree->sibling != NULL) codeGenerator(tree->sibling,0);
 			return " ";
 			break;
@@ -271,15 +271,15 @@ string codeGenerator(treeNode *tree, int flag){
 		case ReturnK:{
 			if(tree->child[0] != NULL){
 				string a = codeGenerator(tree->child[0],0);
-				threeAdressCode = threeAdressCode + "return " + a +"\n";
+				treeAdressCode = treeAdressCode + "return " + a +"\n";
 			}else{
-				threeAdressCode = threeAdressCode + "return " + "\n";
+				treeAdressCode = treeAdressCode + "return " + "\n";
 			}
 			return " ";
 			break;
 		}
 		case IdArrayK:
-			threeAdressCode = threeAdressCode + tabGenerator("", false) + "_t" + to_string(tempIndex) + " = " +  codeGenerator(tree->child[0],0) + "*4" + "\n";
+			treeAdressCode = treeAdressCode + tabGenerator("", false) + "_t" + to_string(tempIndex) + " = " +  codeGenerator(tree->child[0],0) + "*4" + "\n";
 			tempIndex++;
 			return tree->name + "[" + "_t" + to_string(tempIndex - 1) + "]";
 			break;

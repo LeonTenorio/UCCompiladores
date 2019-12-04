@@ -2335,10 +2335,10 @@ int main()
   threePreOrderFile.close();
 
   codeGenerator(savedTree,0);
-  ofstream threeAdressCodeFile;
-  threeAdressCodeFile.open("./outputs/threeAdressCode");
-  threeAdressCodeFile << threeAdressCode;
-  threeAdressCodeFile.close();
+  ofstream treeAdressCodeFile;
+  treeAdressCodeFile.open("./outputs/treeAdressCode");
+  treeAdressCodeFile << treeAdressCode;
+  treeAdressCodeFile.close();
 
   codeGeneratorQuad(savedTree, 0);
   ofstream quadCodeFile;
