@@ -1,0 +1,68 @@
+goto main
+
+input: 
+
+output: 
+
+minloc: 
+       k = low
+       _t0 = low*4
+       x = a[_t0]
+       _t1 = low+1
+       i = _t1
+_L0:   if i >= high goto _L1
+       _t2 = i*4
+       if a[_t2] < x goto _L2
+       goto _L3
+_L2:   
+       _t3 = i*4
+       x = a[_t3]
+       k = i
+_L3:   
+       _t4 = i+1
+       i = _t4
+       goto _L0
+_L1:   return k
+
+sort: 
+       i = low
+       _t5 = high-1
+_L4:   if i >= _t5 goto _L5
+       param a
+       param i
+       param high
+       _t6 = call minloc,3
+       k = _t6
+       _t7 = k*4
+       t = a[_t7]
+       _t8 = k*4
+       _t9 = i*4
+       a[_t8] = a[_t9]
+       _t10 = i*4
+       a[_t10] = t
+       _t11 = i+1
+       i = _t11
+       goto _L4
+_L5:   
+main: 
+       i = 0
+_L6:   if i >= 10 goto _L7
+       _t12 = i*4
+       _t13 = call input,0
+       vet[_t12] = _t13
+       _t14 = i+1
+       i = _t14
+       goto _L6
+_L7:   
+       param vet
+       param 0
+       param 10
+       call sort,3
+       i = 0
+_L8:   if i >= 10 goto _L9
+       _t15 = i*4
+       call output,1
+       _t16 = i+1
+       i = _t16
+       goto _L8
+_L9:   
