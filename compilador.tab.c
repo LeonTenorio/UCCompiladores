@@ -2328,17 +2328,17 @@ int main()
   symbTabFile << symbTabString;
   symbTabFile.close();
 
-  string threePreOrder = showTree(savedTree, false, 0);
-  ofstream threePreOrderFile;
-  threePreOrderFile.open("./outputs/threePreOrder");
-  threePreOrderFile << threePreOrder;
-  threePreOrderFile.close();
+  string treePreOrder = showTree(savedTree, false, 0);
+  ofstream treePreOrderFile;
+  treePreOrderFile.open("./outputs/treePreOrder");
+  treePreOrderFile << treePreOrder;
+  treePreOrderFile.close();
 
   codeGenerator(savedTree,0);
-  ofstream treeAdressCodeFile;
-  treeAdressCodeFile.open("./outputs/treeAdressCode");
-  treeAdressCodeFile << treeAdressCode;
-  treeAdressCodeFile.close();
+  ofstream threeAdressCodeFile;
+  threeAdressCodeFile.open("./outputs/threeAdressCode");
+  threeAdressCodeFile << threeAdressCode;
+  threeAdressCodeFile.close();
 
   codeGeneratorQuad(savedTree, 0);
   ofstream quadCodeFile;
