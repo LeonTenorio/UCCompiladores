@@ -14,7 +14,7 @@
 - Modo de execução: "./exec";
 - Modo de compilar o compilador: "sh script.sh";
 - Saídas do compilador: presentes na pasta "outputs";
-- Saídas presentes: *Arvore sintática "threePreOrder"
+- Saídas presentes: *Arvore sintática "treePreOrder"
                     *Tabela de símbolos "symbTab"
-                    *Código intermediário de 3 endereços "treeAdressCode"
+                    *Código intermediário de 3 endereços "threeAdressCode"
                     *Código intermediário por quadruplas "quadCode"
